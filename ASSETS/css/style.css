@@ -1,0 +1,668 @@
+/* Core Woolworths Brand Colors */
+:root {
+    --primary-color: #004D40; /* Dark Green */
+    --secondary-color: #E6F5EC; /* Light Background Green */
+    --text-dark: #333;
+    --text-light: #fff;
+    --app-bg: #f5f5f5; /* Off-white for body background */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--app-bg);
+    padding-top: 100px; /* Space for fixed header/search */
+}
+
+.app-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: white;
+}
+
+/* 1. HEADER / NAVIGATION BAR */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px 10px;
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-width: 500px; /* Match app-container width */
+    margin: 0 auto;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.header-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icon-link {
+    color: var(--text-dark);
+    font-size: 1.4rem;
+    position: relative;
+    text-decoration: none;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: red;
+    color: var(--text-light);
+    font-size: 0.6rem;
+    padding: 2px 5px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+/* 2. SEARCH BAR */
+.search-bar-container {
+    padding: 10px 15px;
+    background-color: white;
+    position: fixed;
+    top: 55px; /* Directly below the header */
+    left: 0;
+    right: 0;
+    z-index: 999;
+    max-width: 500px; /* Match app-container width */
+    margin: 0 auto;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px; /* Extra padding for the icon */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+}
+
+.search-icon {
+    position: absolute;
+    left: 25px;
+    top: 20px;
+    color: #888;
+    font-size: 1rem;
+}
+
+/* 3. PROMOTIONAL BANNER */
+.promo-banner {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Fixed height for mobile view */
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.promo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.promo-button {
+    background-color: var(--text-light);
+    color: var(--text-dark);
+    border: none;
+    padding: 8px 15px;
+    margin-top: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.dot-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dot.active {
+    background-color: var(--text-light);
+}
+
+/* 4. CATEGORY LINKS */
+.category-section {
+    padding: 0 15px 20px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+.category-scroll-container {
+    display: flex;
+    overflow-x: scroll;
+    padding-bottom: 10px;
+    gap: 20px;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0; /* Prevents items from squishing */
+    width: 80px;
+}
+
+.category-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: var(--secondary-color); /* Light Green background */
+    display: flex;
+    justify-content: center;
+    align-ins: center;
+    margin-bottom: 5px;
+    font-size: 2rem;
+    color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.category-label {
+    font-size: 0.75rem;
+    color: var(--text-dark);
+    text-align: center;
+    font-weight: 600;
+}
+
+.app-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* 5. FOOTER STYLES */
+.app-footer {
+    background-color: #f9f9f9;
+    padding: 20px 15px;
+    border-top: 1px solid #ddd;
+}
+
+.footer-accordion .accordion-item {
+    border-bottom: 1px solid #eee;
+}
+
+.accordion-header {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    padding: 15px 0;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-header::after {
+    content: '\f078'; /* FontAwesome down arrow */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: transform 0.3s ease;
+    color: var(--primary-color);
+}
+
+.accordion-header.active::after {
+    transform: rotate(180deg); /* Rotate arrow up */
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.accordion-content ul {
+    list-style: none;
+    padding: 0 0 15px 0;
+}
+
+.accordion-content ul li a {
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.accordion-content ul li a:hover {
+    color: var(--primary-color);
+}
+
+.footer-static-section {
+    padding: 20px 0;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.footer-static-section h4 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+.card-placeholders, .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    padding-top: 20px;
+}
+
+/* --- Modal Styling for Successful Registration Pop-up --- */
+
+.modal-overlay {
+    position: fixed; /* Keep it fixed over the screen */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of all other content */
+}
+
+.modal-content {
+    background: white;
+    padding: 10px; /* Reduced padding here, more on sub-sections */
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px; /* Max width to match your design look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    position: relative; /* Crucial for positioning the close button */
+}
+
+.modal-header {
+    padding: 10px 20px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333;
+    /* Absolute position removed from HTML, now controlled by header flex */
+}
+
+.modal-body {
+    padding: 10px 20px;
+    text-align: left; /* Aligns text left as per your design */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding: 0 20px 20px 20px;
+}
+
+/* Ensure these button styles are present or defined elsewhere */
+.white-button {
+    padding: 10px 15px;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.black-button {
+    padding: 10px 15px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* --- PROFILE PAGE STYLES --- */
+
+.profile-details-area {
+    /* Style the container for the profile fields */
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.profile-group {
+    /* Separator for each field set */
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #eee;
+}
+
+.profile-group label {
+    /* Label styling (e.g., Email Address) */
+    display: block;
+    font-size: 0.85em;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.profile-value {
+    /* Value styling (e.g., the actual email) */
+    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the promo status section */
+.promo-status {
+    border-bottom: none; /* No separator for the last group */
+    margin-top: 20px;
+}
+
+.promo-status p {
+    font-size: 1em;
+    font-weight: normal;
+    color: #333;
+    margin: 5px 0;
+}
+
+.check-icon {
+    /* Style for the checkmark icon */
+    color: #00704A; /* Woolworths Green or similar success color */
+    margin-right: 5px;
+}
+
+.button-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.footer-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-links a {
+    color: #00704A;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+/* --- Utility Classes for Dynamic Content --- */
+
+.hidden-icon,
+.hidden-content {
+    /* Standard way to visually and functionally hide elements */
+    display: none !important; 
+}
+
+/* Ensure buttons are properly aligned when shown */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    align-items: center; /* Center buttons horizontally */
+}
+
+/* Ensure the profile icon link doesn't look like text if it's visible */
+.profile-link {
+    /* If your header uses flexbox, this might need adjustment */
+    text-decoration: none;
+    color: #333; /* Dark color for the icon */
+    padding: 0 10px;
+    font-size: 1.5em; /* Make it noticeable */
+}
+
+/* Basic header styling (Adjust to match your app's look) */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+
+.nav-icons {
+    display: flex;
+    gap: 15px;
+}
+
+/* ==================================== */
+/* 1. MOBILE SIMULATION (Viewport Fix)  */
+/* ==================================== */
+
+/* Apply to the body to center the main content on a desktop monitor */
+body {
+    background-color: #f0f0f0; /* Light grey background outside the phone frame */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: flex-start; /* Start content at the top */
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Use a common font */
+}
+
+/* This is the container that simulates the phone screen */
+.main-page-container,
+.login-container { 
+    /* The max-width locks it to a typical phone screen width */
+    max-width: 420px; 
+    width: 100%;
+    /* The min-height ensures it fills the view vertically */
+    min-height: 100vh;
+    background-color: #ffffff; /* White background for the app screen */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
+    box-sizing: border-box;
+    padding-bottom: 20px; /* Add space at the bottom */
+}
+
+
+/* ==================================== */
+/* 2. HEADER STYLES (Woolworths Look)   */
+/* ==================================== */
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    /* Use strong colors typical of a brand header */
+    background-color: #00704A; /* Woolworths Green or a dominant color */
+    color: #ffffff;
+    border-bottom: 1px solid #005c3c;
+    position: sticky; /* Keep it at the top */
+    top: 0;
+    z-index: 1000;
+}
+
+.app-header .logo {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.nav-icons a,
+.nav-icons span {
+    color: #ffffff;
+    font-size: 1.4em;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* ==================================== */
+/* 3. HOME CONTENT STYLES               */
+/* ==================================== */
+
+.home-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.home-content h1 {
+    font-size: 1.5em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.home-content p {
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Ensure the button group is centered and uses full width */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Increase gap for mobile feel */
+    margin-top: 30px;
+    padding: 0 20px; /* Padding to prevent buttons touching the edge */
+}
+
+/* General button styling (already defined, but ensure it looks good on mobile) */
+.black-button,
+.grey-button {
+    width: 100%; /* Make buttons full width in the mobile view */
+    padding: 15px;
+    border-radius: 8px; /* Slightly rounded corners */
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    font-size: 1em;
+}
+
+.black-button {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.grey-button {
+    background-color: #eeeeee;
+    color: #333333;
+    border: 1px solid #ccc;
+}
+
+/* --- FOOTER STYLES --- */
+
+/* Ensures only the items are visible, hides the content */
+.accordion-item {
+    border-bottom: 1px solid #eee;
+}
+
+/* Styles the clickable title */
+.accordion-header {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-dark);
+    padding: 15px 0;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Styles the arrow icon */
+.accordion-header::after {
+    content: '\f078'; /* FontAwesome down arrow */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: transform 0.3s ease; /* Smooth arrow rotation */
+    color: var(--primary-color);
+}
+
+/* Rotates the arrow when the header is active/open */
+.accordion-header.active::after {
+    transform: rotate(180deg); 
+}
+
+/* CRITICAL: This is what makes the dropdown transition possible */
+.accordion-content {
+    /* Starts completely hidden */
+    max-height: 0;
+    overflow: hidden; 
+    /* The transition time should match the JavaScript speed */
+    transition: max-height 0.3s ease-in-out; 
+}
+
+.accordion-content ul {
+    list-style: none;
+    padding: 0 0 15px 0;
+}
