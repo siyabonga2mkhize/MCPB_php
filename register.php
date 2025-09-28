@@ -1,61 +1,64 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Step 1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="ASSETS/css/login.css"> 
+</head>
+<body>
 
-// Database credentials
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "Woolworths";
+    <div class="login-dialog-wrapper"> 
+        
+        <a href="index.php" class="close-btn" aria-label="Close Registration">
+            <i class="fa-solid fa-xmark"></i>
+        </a>
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+        <div class="header-section">
+            <h1>Register</h1> 
+            <p class="instruction-text">Create your login credentials. These will be used for both the Woolies website and app</p>
+        </div>
 
-// Check connection
-if ($conn->connect_error) {
-    die(json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]));
-}
+        <form id="registrationStep1Form" action="personal_details.php" method="GET" class="auth-form"> 
 
-// Check if the required keys are set before accessing them
-if (!isset($_POST['email']) || !isset($_POST['password'])) {
-    die(json_encode(["success" => false, "message" => "Required email and password fields are missing."]));
-}
+            <div class="form-group">
+                <label for="email">Email Address*</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
 
-// Get the posted data from the Android app
-$email = $_POST['email'];
-$password = $_POST['password'];
+            <div class="form-group password-group">
+                <label for="password">Password*</label>
+                <input type="password" id="password" name="password" placeholder="Create your password" required>
+                <span class="password-toggle" id="passwordToggle">
+                    <i class="fa-regular fa-eye-slash"></i>
+                </span>
+            </div>
+            
+            <div class="password-requirements">
+                <p>Your password should include:</p>
+                <ul id="passwordValidationList">
+                    <li><i class="fas fa-check-circle"></i> A minimum of 8 characters</li>
+                    <li><i class="fas fa-check-circle"></i> At least 1 uppercase character</li>
+                    <li><i class="fas fa-check-circle"></i> At least 1 lowercase character</li>
+                    <li><i class="fas fa-check-circle"></i> At least 1 number</li>
+                    <li><i class="fas fa-check-circle"></i> At least 1 special character (\!@#$%^&amp;\*, etc)</li>
+                </ul>
+            </div>
+            
+            <div class="register-button-group">
+                <a href="index.php" class="cancel-button-text">CANCEL</a>
+                
+                <button type="submit" class="next-button-grey" id="nextButton" disabled>NEXT</button>
+            </div>
+        </form>
 
-// Hash the password securely
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        <div class="sign-in-link-text">
+            <p>Already a customer? <a href="login.php">Sign In</a></p>
+        </div>
+        
+    </div>
 
-// Check if email already exists
-$sql_check = "SELECT user_id FROM users WHERE email = ?";
-$stmt_check = $conn->prepare($sql_check);
-$stmt_check->bind_param("s", $email);
-$stmt_check->execute();
-$stmt_check->store_result();
-
-if ($stmt_check->num_rows > 0) {
-    echo json_encode(["success" => false, "message" => "Email already registered."]);
-    $stmt_check->close();
-    $conn->close();
-    exit();
-}
-$stmt_check->close();
-
-// Prepare and bind the SQL INSERT statement with only email and password
-$sql_insert = "INSERT INTO users (email, password_hash) VALUES (?, ?)";
-$stmt_insert = $conn->prepare($sql_insert);
-$stmt_insert->bind_param("ss", $email, $hashed_password);
-
-// Execute the statement
-if ($stmt_insert->execute()) {
-    echo json_encode(["success" => true, "message" => "Registration successful!"]);
-} else {
-    echo json_encode(["success" => false, "message" => "Registration failed: " . $stmt_insert->error]);
-}
-
-$stmt_insert->close();
-$conn->close();
-?> 
+    <script src="ASSETS/js/login.js"></script> 
+</body>
+</html>

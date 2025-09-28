@@ -4,48 +4,86 @@
     --secondary-color: #E6F5EC; /* Light Background Green */
     --text-dark: #333;
     --text-light: #fff;
-    --app-bg: #f5f5f5; /* Off-white for body background */
+    --app-bg: #f0f0f0; /* Off-white for background outside the app frame */
+    --woolies-green: #00704A; /* A slightly brighter green for contrast/success */
+    --text-medium: #888;
+    --woolies-purple: #7B1FA2; /* Used for links/headings in sign-in/register */
+    --error-color: #d80000;
 }
 
+/* 1. GLOBAL RESET & MOBILE FRAME (STICKY FOOTER FIX) */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: var(--app-bg);
-    padding-top: 100px; /* Space for fixed header/search */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/* NEW: Class added by JS to body when menu is open */
+body.menu-open {
+    overflow: hidden; /* Prevent scrolling when menu is active */
+}
+
+.page-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+}
+
+/* Global container for centering desktop content (used in the footer) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* This is the container that simulates the phone screen */
 .app-container {
     max-width: 500px;
-    margin: 0 auto;
+    width: 100%;
+    min-height: 100%;
     background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-/* 1. HEADER / NAVIGATION BAR */
+/* 2. HEADER & NAVIGATION BAR */
 .main-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 15px 10px;
-    background-color: white;
-    border-bottom: 1px solid #eee;
-    position: fixed;
+    padding: 15px;
+    background-color: var(--woolies-green);
+    color: var(--text-light);
+    position: sticky;
     top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    max-width: 500px; /* Match app-container width */
-    margin: 0 auto;
+    width: 100%;
+    height: 52px; /* Set a clean fixed height */
+    z-index: 10000;
 }
 
-.logo-text {
-    font-size: 1.2rem;
+.main-header .logo-link {
+    text-decoration: none;
+}
+
+.main-header .logo {
     font-weight: bold;
-    color: var(--primary-color);
+    font-size: 1.2rem;
+    color: var(--text-light);
 }
 
 .header-icons {
@@ -53,616 +91,947 @@ body {
     gap: 15px;
 }
 
-.icon-link {
-    color: var(--text-dark);
+.icon-link,
+.menu-btn {
+    color: var(--text-light);
     font-size: 1.4rem;
     position: relative;
     text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .cart-count {
     position: absolute;
     top: -5px;
     right: -8px;
-    background-color: red;
+    background-color: var(--error-color); /* Red */
     color: var(--text-light);
     font-size: 0.6rem;
     padding: 2px 5px;
     border-radius: 50%;
     line-height: 1;
+    min-width: 18px; /* Ensures minimum size for count > 9 */
+    text-align: center;
 }
 
-/* 2. SEARCH BAR */
+/* 3. SEARCH BAR */
 .search-bar-container {
     padding: 10px 15px;
     background-color: white;
-    position: fixed;
-    top: 55px; /* Directly below the header */
-    left: 0;
-    right: 0;
-    z-index: 999;
-    max-width: 500px; /* Match app-container width */
-    margin: 0 auto;
+    position: sticky;
+    top: 52px; /* Height of the main-header */
+    width: 100%;
+    z-index: 9999;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Soft shadow below search bar */
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-input-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-medium);
 }
 
 .search-input {
     width: 100%;
-    padding: 10px 10px 10px 40px; /* Extra padding for the icon */
+    padding: 10px 10px 10px 40px; /* Space for icon */
     border: 1px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
     background-color: #f9f9f9;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.search-input:focus {
+    outline: none;
+    border-color: var(--woolies-green);
+    background-color: var(--text-light);
 }
 
-.search-icon {
-    position: absolute;
-    left: 25px;
-    top: 20px;
-    color: #888;
-    font-size: 1rem;
+
+/* 4. CONTENT AREA & AUTH BUTTONS */
+.content-area {
+    padding: 20px 15px 50px 15px;
+    /* Add padding so content doesn't hit the footer */
 }
 
-/* 3. PROMOTIONAL BANNER */
-.promo-banner {
-    position: relative;
+/* 5. BUTTON UTILITIES (Consolidated) */
+
+/* Base style for all primary black buttons */
+.black-button-style {
+    display: block;
     width: 100%;
-    height: 300px; /* Fixed height for mobile view */
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.banner-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.banner-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px;
+    padding: 12px;
+    background-color: var(--text-dark);
     color: var(--text-light);
-    text-align: center;
-}
-
-.promo-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
-
-.promo-button {
-    background-color: var(--text-light);
-    color: var(--text-dark);
     border: none;
-    padding: 8px 15px;
-    margin-top: 10px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.dot-indicators {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.dot.active {
-    background-color: var(--text-light);
-}
-
-/* 4. CATEGORY LINKS */
-.category-section {
-    padding: 0 15px 20px;
-}
-
-.section-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: var(--text-dark);
-}
-
-.category-scroll-container {
-    display: flex;
-    overflow-x: scroll;
-    padding-bottom: 10px;
-    gap: 20px;
-}
-
-.category-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    border-radius: 4px;
     text-decoration: none;
-    flex-shrink: 0; /* Prevents items from squishing */
-    width: 80px;
-}
-
-.category-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: var(--secondary-color); /* Light Green background */
-    display: flex;
-    justify-content: center;
-    align-ins: center;
-    margin-bottom: 5px;
-    font-size: 2rem;
-    color: var(--primary-color);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.category-label {
-    font-size: 0.75rem;
-    color: var(--text-dark);
-    text-align: center;
-    font-weight: 600;
-}
-
-.app-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 0.8rem;
-    color: #888;
-}
-
-/* 5. FOOTER STYLES */
-.app-footer {
-    background-color: #f9f9f9;
-    padding: 20px 15px;
-    border-top: 1px solid #ddd;
-}
-
-.footer-accordion .accordion-item {
-    border-bottom: 1px solid #eee;
-}
-
-.accordion-header {
-    font-size: 1rem;
     font-weight: bold;
-    color: var(--text-dark);
-    padding: 15px 0;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.accordion-header::after {
-    content: '\f078'; /* FontAwesome down arrow */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    transition: transform 0.3s ease;
-    color: var(--primary-color);
-}
-
-.accordion-header.active::after {
-    transform: rotate(180deg); /* Rotate arrow up */
-}
-
-.accordion-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-}
-
-.accordion-content ul {
-    list-style: none;
-    padding: 0 0 15px 0;
-}
-
-.accordion-content ul li a {
-    display: block;
-    padding: 8px 0;
-    text-decoration: none;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-.accordion-content ul li a:hover {
-    color: var(--primary-color);
-}
-
-.footer-static-section {
-    padding: 20px 0;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-}
-
-.footer-static-section h4 {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: var(--text-dark);
-}
-
-.card-placeholders, .social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-}
-
-.social-icons a {
-    color: var(--primary-color);
-    font-size: 1.5rem;
-    text-decoration: none;
-}
-
-.copyright {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #888;
-    padding-top: 20px;
-}
-
-/* --- Modal Styling for Successful Registration Pop-up --- */
-
-.modal-overlay {
-    position: fixed; /* Keep it fixed over the screen */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensure it's on top of all other content */
-}
-
-.modal-content {
-    background: white;
-    padding: 10px; /* Reduced padding here, more on sub-sections */
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px; /* Max width to match your design look */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    text-align: center;
-    position: relative; /* Crucial for positioning the close button */
-}
-
-.modal-header {
-    padding: 10px 20px 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-title {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-    color: #333;
-    /* Absolute position removed from HTML, now controlled by header flex */
-}
-
-.modal-body {
-    padding: 10px 20px;
-    text-align: left; /* Aligns text left as per your design */
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    padding: 0 20px 20px 20px;
-}
-
-/* Ensure these button styles are present or defined elsewhere */
-.white-button {
-    padding: 10px 15px;
-    border: 1px solid black;
-    background-color: white;
-    color: black;
-    cursor: pointer;
     text-transform: uppercase;
-    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.black-button {
-    padding: 10px 15px;
-    border: none;
+.black-button-style:hover {
     background-color: black;
-    color: white;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
 }
 
-/* --- PROFILE PAGE STYLES --- */
+/* White button style (used for secondary/logout) */
+.white-button {
+    background-color: #fff;
+    color: var(--text-dark);
+    border: 1px solid var(--text-dark);
+}
 
-.profile-details-area {
-    /* Style the container for the profile fields */
-    margin: 20px 0;
-    padding: 15px;
-    border: 1px solid #ddd;
+.white-button:hover {
+    background-color: var(--text-dark);
+    color: var(--text-light);
+}
+
+/* 6. LOGIN & REGISTRATION FORMS STYLES */
+
+.auth-form-container {
+    padding: 20px;
+    max-width: 400px;
+    margin: 30px auto;
+    background-color: white;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.profile-group {
-    /* Separator for each field set */
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-    border-bottom: 1px dashed #eee;
+.auth-form-container h2 {
+    color: var(--woolies-purple);
+    font-size: 1.8em;
+    margin-bottom: 5px;
 }
 
-.profile-group label {
-    /* Label styling (e.g., Email Address) */
-    display: block;
-    font-size: 0.85em;
-    color: #555;
-    font-weight: 500;
-    margin-bottom: 2px;
-}
-
-.profile-value {
-    /* Value styling (e.g., the actual email) */
-    font-size: 1.1em;
-    color: #333;
-    font-weight: bold;
-    margin: 0;
-    padding: 0;
-}
-
-/* Style for the promo status section */
-.promo-status {
-    border-bottom: none; /* No separator for the last group */
-    margin-top: 20px;
-}
-
-.promo-status p {
-    font-size: 1em;
-    font-weight: normal;
-    color: #333;
-    margin: 5px 0;
-}
-
-.check-icon {
-    /* Style for the checkmark icon */
-    color: #00704A; /* Woolworths Green or similar success color */
-    margin-right: 5px;
-}
-
-.button-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 30px;
-}
-
-.footer-links {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.footer-links a {
-    color: #00704A;
-    text-decoration: none;
+.auth-form-container p {
+    color: var(--text-medium);
+    margin-bottom: 20px;
     font-size: 0.9em;
 }
 
-/* --- Utility Classes for Dynamic Content --- */
-
-.hidden-icon,
-.hidden-content {
-    /* Standard way to visually and functionally hide elements */
-    display: none !important; 
+.input-group {
+    margin-bottom: 20px;
 }
 
-/* Ensure buttons are properly aligned when shown */
-.button-group {
+.input-group label {
+    display: block;
+    color: var(--error-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--woolies-purple);
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrapper .input-field {
+    padding-right: 40px; /* Space for the eye icon */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    color: var(--text-medium);
+    cursor: pointer;
+}
+
+.forgot-password-link {
+    display: block;
+    color: var(--woolies-purple);
+    text-decoration: underline;
+    font-size: 0.9em;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+/* 7. FOOTER STYLES (Desktop and Mobile) */
+/* =======================================
+   DESKTOP FOOTER STYLES (site-footer)
+   ======================================= */
+.site-footer {
+    background-color: #2b2b2b;
+    color: #ffffff;
+    padding: 40px 0 20px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    width: 100%;
+}
+
+.footer-content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footer-sections {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 20px;
+}
+
+.footer-column {
+    width: 20%;
+    min-width: 180px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.footer-cards-social {
+    width: 35%;
+    min-width: 280px;
+    text-align: right;
+}
+
+.footer-heading {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-cards-social .footer-heading {
+    text-align: right;
+}
+
+.card-logos {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card-img {
+    height: 30px;
+    width: auto;
+}
+
+.reward-logo {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.my-difference-img {
+    max-width: 150px;
+    height: auto;
+}
+
+.social-links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.social-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.2em;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links a {
+    color: #cccccc;
+    text-decoration: none;
+}
+
+.footer-legal {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px;
+    color: #aaaaaa;
+}
+
+/* =======================================
+   MOBILE FOOTER RESPONVISENESS
+   ======================================= */
+@media (max-width: 768px) {
+    .footer-sections {
+        flex-direction: column;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .footer-column,
+    .footer-cards-social {
+        width: 100%;
+        min-width: auto;
+        text-align: left;
+    }
+
+    .footer-cards-social {
+        border-top: 1px solid #444;
+        padding-top: 20px;
+        margin-top: 20px;
+    }
+
+    .footer-heading {
+        text-align: left !important;
+    }
+
+    .card-logos,
+    .social-links,
+    .reward-logo {
+        justify-content: flex-start;
+    }
+}
+
+
+/* 8. MOBILE SIDE MENU STYLES (Hamburger/Multi-Level) */
+.side-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10005;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.side-menu-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+.side-menu-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 85%;
+    max-width: 350px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.4);
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-    align-items: center; /* Center buttons horizontally */
 }
 
-/* Ensure the profile icon link doesn't look like text if it's visible */
-.profile-link {
-    /* If your header uses flexbox, this might need adjustment */
-    text-decoration: none;
-    color: #333; /* Dark color for the icon */
-    padding: 0 10px;
-    font-size: 1.5em; /* Make it noticeable */
+.side-menu-overlay.active .side-menu-content {
+    transform: translateX(0);
 }
 
-/* Basic header styling (Adjust to match your app's look) */
-.app-header {
+/* --- Multi-Level Stacking Logic --- */
+.side-menu-overlay.second-level .side-menu-content,
+.side-menu-overlay.third-level .side-menu-content {
+    transform: translateX(100%);
+    box-shadow: none;
+}
+
+.side-menu-overlay.second-level.active .side-menu-content {
+    transform: translateX(0);
+}
+
+.side-menu-overlay.third-level.active .side-menu-content {
+    transform: translateX(0);
+}
+
+.menu-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
+    padding: 15px 20px;
+    background-color: var(--woolies-green);
+    color: white;
+    flex-shrink: 0;
 }
 
-.nav-icons {
-    display: flex;
-    gap: 15px;
-}
-
-/* ==================================== */
-/* 1. MOBILE SIMULATION (Viewport Fix)  */
-/* ==================================== */
-
-/* Apply to the body to center the main content on a desktop monitor */
-body {
-    background-color: #f0f0f0; /* Light grey background outside the phone frame */
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: flex-start; /* Start content at the top */
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif; /* Use a common font */
-}
-
-/* This is the container that simulates the phone screen */
-.main-page-container,
-.login-container { 
-    /* The max-width locks it to a typical phone screen width */
-    max-width: 420px; 
-    width: 100%;
-    /* The min-height ensures it fills the view vertically */
-    min-height: 100vh;
-    background-color: #ffffff; /* White background for the app screen */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional subtle shadow */
-    box-sizing: border-box;
-    padding-bottom: 20px; /* Add space at the bottom */
-}
-
-
-/* ==================================== */
-/* 2. HEADER STYLES (Woolworths Look)   */
-/* ==================================== */
-
-.app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    /* Use strong colors typical of a brand header */
-    background-color: #00704A; /* Woolworths Green or a dominant color */
-    color: #ffffff;
-    border-bottom: 1px solid #005c3c;
-    position: sticky; /* Keep it at the top */
-    top: 0;
-    z-index: 1000;
-}
-
-.app-header .logo {
+.menu-header .logo {
     font-weight: bold;
     font-size: 1.2em;
 }
 
-.nav-icons a,
-.nav-icons span {
-    color: #ffffff;
-    font-size: 1.4em;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-/* ==================================== */
-/* 3. HOME CONTENT STYLES               */
-/* ==================================== */
-
-.home-content {
-    padding: 20px;
-    text-align: center;
-}
-
-.home-content h1 {
+.menu-header .close-btn {
+    background: none;
+    border: none;
+    color: white;
     font-size: 1.5em;
-    margin-top: 20px;
-    margin-bottom: 10px;
+    cursor: pointer;
 }
 
-.home-content p {
-    color: #555;
-    margin-bottom: 30px;
-}
-
-/* Ensure the button group is centered and uses full width */
-.button-group {
+.menu-nav {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Increase gap for mobile feel */
-    margin-top: 30px;
-    padding: 0 20px; /* Padding to prevent buttons touching the edge */
+    padding: 0;
+    overflow-y: auto;
 }
 
-/* General button styling (already defined, but ensure it looks good on mobile) */
-.black-button,
-.grey-button {
-    width: 100%; /* Make buttons full width in the mobile view */
-    padding: 15px;
-    border-radius: 8px; /* Slightly rounded corners */
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.2s;
-    font-size: 1em;
-}
-
-.black-button {
-    background-color: #000000;
-    color: #ffffff;
-}
-
-.grey-button {
-    background-color: #eeeeee;
-    color: #333333;
-    border: 1px solid #ccc;
-}
-
-/* --- FOOTER STYLES --- */
-
-/* Ensures only the items are visible, hides the content */
-.accordion-item {
-    border-bottom: 1px solid #eee;
-}
-
-/* Styles the clickable title */
-.accordion-header {
-    font-size: 1rem;
-    font-weight: bold;
-    color: var(--text-dark);
-    padding: 15px 0;
-    cursor: pointer;
-    position: relative;
+.menu-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    font-size: 1.1em;
+    font-weight: 500;
 }
 
-/* Styles the arrow icon */
-.accordion-header::after {
-    content: '\f078'; /* FontAwesome down arrow */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    transition: transform 0.3s ease; /* Smooth arrow rotation */
+.menu-item:hover {
+    background-color: #f7f7f7;
+}
+
+.menu-item .fa-angle-right {
+    font-size: 0.9em;
+    color: #999;
+}
+
+.menu-divider {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+.sub-menu-header {
+    justify-content: space-between;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.back-btn .fa-angle-left {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.new-tag {
+    background-color: yellow;
+    color: black;
+    font-size: 0.7em;
+    font-weight: bold;
+    padding: 2px 5px;
+    margin-left: 10px;
+    border-radius: 3px;
+    align-self: flex-start;
+}
+
+.menu-item.link-with-tag {
+    justify-content: flex-start;
+}
+
+.menu-item.dropdown-toggle .fa-angle-down {
+    margin-left: auto;
+    color: #333;
+}
+
+.menu-divider-thin {
+    border: none;
+    height: 1px;
+    background-color: #eee;
+    margin: 0;
+}
+
+
+/* 9. PROFILE PAGE STYLES */
+
+.profile-area {
+    padding-top: 20px;
+    padding-bottom: 80px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-bottom: 5px;
+}
+
+.page-subtitle {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.section-heading {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+/* Form Styles */
+.profile-form {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* NEW: Layout for First Name and Last Name to be side-by-side */
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-field-half {
+    flex: 1; /* Takes up half the space */
+    width: 50%;
+}
+
+.profile-form label {
+    display: block;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.profile-form input[type="text"],
+.profile-form input[type="email"],
+.profile-form input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.profile-form input[type="text"]:focus,
+.profile-form input[type="tel"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Specific styling for disabled email input */
+.profile-form input[disabled] {
+    background-color: #f5f5f5;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.input-hint {
+    font-size: 0.75em;
+    color: #999;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.form-action-group {
+    margin-top: 30px;
+    text-align: right;
+}
+
+/* Apply base black button style to the update button */
+.profile-update-btn {
+    width: auto;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+}
+
+.success-alert {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.profile-link-group {
+    margin-top: 40px;
+}
+
+.profile-management-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+    font-size: 1.05em;
+}
+
+.profile-management-link:hover {
     color: var(--primary-color);
 }
 
-/* Rotates the arrow when the header is active/open */
-.accordion-header.active::after {
-    transform: rotate(180deg); 
+.profile-management-link i {
+    font-size: 0.9em;
+    color: #999;
 }
 
-/* CRITICAL: This is what makes the dropdown transition possible */
-.accordion-content {
-    /* Starts completely hidden */
-    max-height: 0;
-    overflow: hidden; 
-    /* The transition time should match the JavaScript speed */
-    transition: max-height 0.3s ease-in-out; 
+.profile-divider {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 40px 0;
 }
 
-.accordion-content ul {
-    list-style: none;
-    padding: 0 0 15px 0;
+.profile-logout-area {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.logout-button {
+    display: inline-block;
+    padding: 10px 25px;
+}
+
+@media (max-width: 480px) {
+    .profile-area {
+        padding: 10px 15px 60px 15px;
+    }
+    .form-row {
+        flex-direction: column; /* Stack fields on very small screens */
+        gap: 0;
+    }
+    .form-field-half {
+        width: 100%;
+    }
+}
+
+
+/* 10. MODAL STYLES (Successful Registration) */
+/* ... (unchanged) ... */
+
+/* --- FINAL UTILITY FIXES --- */
+.hidden-content {
+    display: none !important;
+}
+
+/* 11. INDEX PAGE WELCOME AREA STYLES */
+
+.welcome-area {
+    padding: 25px 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.welcome-heading {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.welcome-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.account-button {
+    /* Uses .black-button-style for its look */
+    display: inline-block;
+    padding: 12px 20px;
+    width: auto;
+}
+
+.logout-button-index {
+    /* Uses .white-button for its look */
+    display: inline-block;
+    padding: 12px 20px;
+    width: auto;
+}
+
+.guest-auth-actions {
+    margin-top: 20px;
+}
+
+.guest-auth-actions .black-button-style {
+    margin-bottom: 15px;
+}
+/* --- 12. ABOUT PAGE TEAM DISPLAY STYLES (UPDATED) --- */
+
+/* Individual Team Member Card (The container) */
+.team-member-card {
+    /* ... existing styles for flex-basis, padding, etc. remain ... */
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-basis: 100%; 
+    max-width: 100%;
+}
+
+/* 1. Member Photo (New Styling) */
+.member-photo {
+    width: 80px; /* Slightly larger size for the photo area */
+    height: 80px;
+    margin: 0 auto 10px;
+    border-radius: 50%;
+    overflow: hidden; /* Ensures photo stays within the circle */
+    background-color: #eee; /* Light gray background for the photo circle */
+    border: 3px solid var(--woolies-green); /* Green border around the photo */
+    display: flex; /* For centering the icon/image */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling the Font Awesome user icon placeholder */
+.member-photo i {
+    font-size: 3em; /* Large icon */
+    color: #ccc; /* Light gray icon color */
+}
+
+/* 3. Student Number Styling (New Styling) */
+.member-student-no {
+    color: var(--text-medium); /* Subdued text color */
+    font-size: 0.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-transform: none;
+}
+
+/* 4. Role Styling (Ensure clear separation) */
+.member-role {
+    color: var(--woolies-purple);
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Team Grid Layout */
+.team-grid {
+    display: flex;
+    flex-wrap: wrap; /* Allows cards to wrap to the next line */
+    gap: 20px; /* Space between cards */
+    justify-content: center;
+}
+
+/* Individual Team Member Card */
+.team-member-card {
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-basis: 100%; /* Default to full width on mobile */
+    max-width: 100%;
+}
+
+@media (min-width: 500px) {
+    /* Two-column layout on wider screens */
+    .team-member-card {
+        flex-basis: calc(50% - 10px); /* 50% width minus half the gap */
+    }
+}
+
+/* Member Initials (Circle Avatar) */
+.member-initials {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    background-color: var(--primary-color); /* Woolies Green */
+    color: var(--text-light);
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/* Text Styles */
+.member-name {
+    color: var(--text-dark);
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.member-role {
+    color: var(--woolies-purple); /* Highlight the role */
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.member-description {
+    color: var(--text-medium);
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Footer Note */
+.footer-note {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.footer-note p {
+    color: var(--text-medium);
+    font-size: 0.8em;
+}
+/* Keep the rest of the styles from the previous step (.team-grid, .member-name, .member-description, etc.) */
+/* --- GLOBAL STYLES & WRAPPER (REVISION) --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    display: flex; /* Use flex to push footer to bottom if content is short */
+    flex-direction: column;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex-grow: 1; /* Allows wrapper to take up available space */
+}
+
+/* --- IMAGE BOX STYLES (CRITICAL UPDATE) --- */
+.imbBx {
+    height: 280px; /* Consistent height for image area */
+    width: 100%; /* Ensures it takes full width of the card */
+    overflow: hidden; /* **CRITICAL: Hides any overflowing parts of the image** */
+    position: relative;
+    border-bottom: 5px solid #007bff; /* Keeps the bottom border line */
+}
+
+.imbBx img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* **CRITICAL: This property makes the image fill and crop nicely** */
+    object-position: center; /* **CRITICAL: Centers the image within its box** */
+    display: block; /* Removes extra space below image */
+    transition: transform 0.5s ease;
+}
+
+.card:hover .imbBx img {
+    transform: scale(1.05); /* Slight zoom on image hover */
+}
+
+
+/* --- CARD GRID LAYOUT (REVISION) --- */
+.card_container {
+    display: grid; /* Using CSS Grid for more robust layout */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 30px; /* Space between cards */
+    margin-bottom: 30px;
+    justify-items: center; /* Center cards within grid columns if space allows */
+}
+
+/* FOOTER STYLES (REVISION) */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: auto; /* Pushes footer to the bottom */
+    border-top: 1px solid #eee;
+    color: #888;
+    font-size: 0.9em;
+}
+/* ADDED STYLES FOR ROLE AND DESCRIPTION */
+
+/* Style the Role */
+.card .member-role {
+    font-size: 0.95em;
+    font-weight: bold;
+    color: #007bff; /* Use the same blue as the image border/title underline */
+    margin: 10px 0 5px;
+    text-transform: uppercase;
+}
+
+/* Style the Description */
+.card .member-description {
+    font-size: 0.85em;
+    color: #555;
+    padding: 0 10px 10px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Ensure the content padding is sufficient for new elements */
+.content {
+    padding: 20px 0; /* Adjusted padding to better fit new elements */
+}
+
+/* Adjust h3 to remove the bottom margin that might interfere with role */
+.contentBx h3 {
+    margin: 0 0 5px; /* Keep a small margin for the student number */
+}
+
+/* Ensure the full card border uses the primary color (Woolies Purple/Green if available, but using blue for contrast here) */
+.imbBx {
+    border-bottom: 5px solid #007bff; 
 }

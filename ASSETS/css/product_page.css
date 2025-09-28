@@ -1,0 +1,264 @@
+/* ================== General Page Layout ================== */
+
+/* Ensure the app-container doesn't have excess padding on product pages if the design is full width */
+.app-container {
+    padding: 0; 
+}
+
+/* Specific padding for the content area on product listing pages */
+.product-list-page {
+    padding: 0 16px; /* Adjust as needed for mobile spacing */
+}
+
+/* Category Title */
+.product-list-page h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Breadcrumb Styling */
+.breadcrumb-container {
+    padding: 10px 16px 0;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.breadcrumb-container a {
+    color: #555;
+    text-decoration: none;
+}
+
+.breadcrumb-container a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-container strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* ================== Category Banner ================== */
+.category-banner {
+    width: 100%;
+    margin-bottom: 20px;
+    /* This assumes the banner is full-width */
+}
+
+.category-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+/* ================== Controls Bar (Filter/Sort) ================== */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.filter-dropdown, .sort-dropdown {
+    flex: 1; /* Makes both dropdowns take equal width */
+}
+
+.controls-bar select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
+    -moz-appearance: none;    /* Remove default arrow on Firefox */
+    appearance: none;         /* Remove default arrow */
+    background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l4 4 4-4"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* ================== Info Bar & View Toggle ================== */
+.info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.item-count {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.view-toggle i {
+    font-size: 1.2rem;
+    color: #999;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.view-toggle i:first-child {
+    color: #333; /* Default active view icon */
+}
+
+/* ================== Filter Category Buttons ================== */
+.filter-category-buttons {
+    display: flex;
+    overflow-x: auto; /* Allows horizontal scrolling for many buttons */
+    white-space: nowrap;
+    padding-bottom: 15px;
+    gap: 8px;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    margin-bottom: 20px;
+    text-align: center; /* Center the SEE MORE button text */
+}
+
+.filter-category-buttons::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.filter-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    border-color: #000;
+}
+
+.filter-btn.active {
+    background-color: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.see-more-btn {
+    display: inline-block;
+    padding: 8px 15px;
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.see-more-btn i {
+    margin-left: 5px;
+}
+
+
+/* ================== Product Grid ================== */
+.product-grid {
+    display: grid;
+    /* 2 columns for mobile, 3+ for tablet/desktop might be better in a @media query */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.product-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    padding: 10px;
+}
+
+.save-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #d11c22; /* Red color for SAVE */
+    color: #fff;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-bottom-right-radius: 8px;
+}
+
+.product-details {
+    padding: 0 10px;
+}
+
+.product-name {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #333;
+    margin: 5px 0;
+    /* Limit name to a couple of lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 30px; /* Ensure space for two lines */
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #000;
+    margin: 5px 0 15px;
+}
+
+.add-to-cart-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    width: calc(100% - 20px); /* 100% minus padding */
+    padding: 10px 0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #333;
+}
+
+/* ================== Media Queries for Larger Screens ================== */
+
+@media (min-width: 600px) {
+    .product-list-page {
+        padding: 0 30px;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablets */
+        gap: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .product-list-page {
+        padding: 0 50px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
+        gap: 25px;
+    }
+}

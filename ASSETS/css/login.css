@@ -2,10 +2,13 @@
 :root {
     --primary-color: #004D40; /* Dark Green */
     --accent-color: #D32F2F; /* Red for errors/accents */
-    --tip-bg-color: #EAF7E8; /* Light Green/Blue for tips box */
+    /* REMOVED: --tip-bg-color: #EAF7E8; (No light background for tips in the target design) */
     --text-dark: #333;
     --text-medium: #666;
     --border-color: #ccc;
+    --woolies-purple: #6A1B9A; /* Color for Sign In text, links, and Register text */
+    --black-color: #000; /* Added for consistency with black button/border */
+    --disabled-grey: #ccc; /* Specifically for the NEXT button */
 }
 
 * {
@@ -16,39 +19,96 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    /* Use the off-white background seen in the image */
+    background-color: #f0f0f0; 
 }
 
+/* --- Dialog Wrapper (Used by both Sign In and Register) --- */
+.login-dialog-wrapper {
+    /* Simulates the centered white box in your image */
+    max-width: 400px; 
+    width: 90%;
+    margin: 50px auto; 
+    padding: 30px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative; 
+}
+
+/* FORCE FULL-SCREEN LOGIN OVERLAY */
 .login-container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
+    /* CRITICAL FIX: Use fixed positioning relative to the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    /* CRITICAL FIX: Use viewport units to guarantee 100% of the visible screen */
+    width: 100vw;    /* Takes 100% of the viewport width */
+    height: 100vh;   /* Takes 100% of the viewport height */
+    
+    /* Ensure it sits above all other content (header, search bar, etc.) */
+    z-index: 10000; 
+    
+    /* Background and Appearance */
+    background-color: var(--app-bg); /* Use the off-white background to cover the page */
+    box-shadow: none; /* Remove any previous 'app frame' shadow */
+    
+    /* Centering the Form */
+    display: flex;
+    justify-content: center; /* Centers the form horizontally */
+    align-items: center; /* Centers the form vertically */
+
+    /* Override any residual constraints from the base .app-container */
+    max-width: none !important;
+    padding: 0;
 }
 
-/* Close/Back Button */
+//* Ensure the inner form remains centered and doesn't stretch */
+.login-container .auth-form {
+    margin: 0; /* Remove the old auto margin */
+    /* Keep the form compact and visible */
+    max-width: 400px; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Optional: Adds a lift effect */
+}
+/* Ensure the body scroll is locked when the login screen is open */
+/* This is a good practice for fixed overlays */
+body.login-view-active {
+    overflow: hidden;
+}
+/* ------------------------------------------- */
+
+/* Close/Back Button (MOVED TO RIGHT) */
 .close-btn {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 25px; 
+    right: 20px; 
     font-size: 1.5rem;
-    color: var(--text-medium);
+    color: var(--text-dark); 
     text-decoration: none;
+    font-weight: normal;
+    cursor: pointer;
+    line-height: 1; 
 }
 
 .header-section {
-    padding-top: 20px;
+    padding-top: 0; 
     margin-bottom: 25px;
+    text-align: left;
 }
 
 .header-section h1 {
     font-size: 1.8rem;
-    color: var(--text-dark);
+    color: var(--text-dark); /* Black for the main title */
     margin-bottom: 5px;
 }
 
+/* Instruction text style */
 .header-section p {
-    font-size: 0.9rem;
-    color: var(--text-medium);
+    font-size: 1rem; 
+    color: var(--woolies-purple); /* Purple text */
+    margin-top: 0;
+    margin-bottom: 20px; 
 }
 
 /* Form Styling */
@@ -59,8 +119,8 @@ body {
 .form-group label {
     display: block;
     font-size: 0.9rem;
-    font-weight: bold;
-    color: var(--text-dark);
+    font-weight: normal;
+    color: var(--woolies-purple); /* Purple labels */
     margin-bottom: 5px;
 }
 
@@ -70,6 +130,12 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--woolies-purple); 
+    outline: none;
 }
 
 /* Password Group for Icon positioning */
@@ -86,284 +152,497 @@ body {
     font-size: 1rem;
 }
 
-/* Password Tips Box */
-.password-tips-box {
-    background-color: var(--tip-bg-color);
-    border-radius: 8px;
+/* Links (Forgot Password) */
+.forgot-password-link {
+    display: block;
+    text-align: left;
+    font-size: 0.9rem; 
+    color: var(--woolies-purple);
+    text-decoration: underline;
+    margin-bottom: 30px;
+    font-weight: normal; 
+}
+
+
+/* --- BUTTONS & BUTTON GROUPS --- */
+
+/* Black Button (Used for SIGN IN) */
+.black-button {
+    width: 100%;
     padding: 15px;
-    margin-bottom: 20px;
-}
-
-.password-tips-box p {
+    background-color: black !important;
+    color: white;
+    border: 1px solid black;
+    border-radius: 4px;
+    font-size: 1.1rem;
     font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 8px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 25px; 
+    transition: background-color 0.2s ease;
 }
 
-.password-tips-box ul {
+.black-button:hover {
+    background-color: #333 !important;
+}
+
+/* NEW: Button Group for CANCEL and NEXT/SUBMIT */
+.register-button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* NEW: CANCEL Button (Left-aligned purple text link) - Target Style */
+.cancel-button-text {
+    color: var(--woolies-purple); /* Purple Text */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 0;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+}
+
+
+/* NEXT Button - Disabled (Default Grey) */
+.next-button-grey {
+    padding: 10px 20px;
+    background-color: var(--disabled-grey);
+    color: var(--text-medium);
+    border: none; /* No border for the grey state */
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: not-allowed;
+    width: 35%; 
+    text-align: center;
+}
+/* NEXT Button - Enabled (Black) */
+.next-button-black {
+    padding: 10px 20px;
+    background-color: var(--black-color);
+    color: white;
+    border: 1px solid var(--black-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 35%; 
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+.next-button-black:hover {
+    background-color: #333;
+}
+
+/* Register Section (Used for Sign In's "New Customer" text) */
+.register-section {
+    text-align: left; 
+    border-top: none;
+    padding-top: 10px;
+}
+
+.register-section p {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-weight: normal;
+    line-height: 1.3;
+}
+
+/* The REGISTER button (used in Sign In screen) */
+.register-button-style { 
+    width: 50%; 
+    padding: 12px;
+    background-color: #fff;
+    color: var(--black-color); 
+    border: 1px solid var(--black-color); 
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+}
+
+.register-button-style:hover {
+    background-color: #f0f0f0;
+}
+
+/* --- Password Requirements List Styling (Updated to remove background) --- */
+.password-requirements {
+    list-style: none; /* Remove default bullets */
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    
+    /* NEW/UPDATED: Target design has a heading above the list */
+    /* Ensure the heading "Your password should include:" is styled if present in HTML */
+}
+
+/* Style for the heading above the list (assuming it's a <p> tag within the list wrapper) */
+.password-requirements p {
+    color: var(--text-dark); /* Black/dark grey heading */
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.password-requirements ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.password-tips-box li {
-    font-size: 0.85rem;
+.password-requirements li {
+    font-size: 0.9rem; /* Increased slightly for better visibility */
     color: var(--text-dark);
-    line-height: 1.5;
+    line-height: 1.6;
+    padding-left: 20px; /* Space for the custom checkmark icon */
+    position: relative;
+    margin-bottom: 2px;
 }
 
-.password-tips-box li i {
-    color: var(--primary-color);
-    margin-right: 8px;
-}
-
-/* Links */
-.forgot-password-link {
-    display: block;
-    text-align: right;
-    font-size: 0.85rem;
-    color: var(--text-medium);
-    text-decoration: underline;
-    margin-bottom: 30px;
-}
-
-/* Buttons */
-.btn-primary {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--primary-color);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-bottom: 40px;
-}
-
-/* Register Section */
-.register-section {
-    text-align: center;
-    border-top: 1px solid #eee;
-    padding-top: 30px;
-}
-
-.register-section p {
+/* Styling for the checkmark icon (fa-check-circle) */
+.password-requirements li i.fa-check-circle {
+    position: absolute;
+    left: 0;
+    top: 5px; 
+    color: var(--woolies-purple); /* Purple checkmark color */
     font-size: 0.9rem;
-    color: var(--text-medium);
 }
 
-.register-section p:first-of-type {
-    font-weight: bold;
+/* "Already a customer?" link */
+.sign-in-link-text {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-top: 25px;
+    text-align: left; /* Ensure it aligns with other content */
 }
 
-.btn-secondary {
-    width: 100%;
-    padding: 12px;
-    background-color: #fff;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-    border-radius: 4px;
-    font-size: 1.1rem;
+.sign-in-link-text p {
+    margin: 0;
+}
+
+.sign-in-link-text a {
+    color: var(--woolies-purple); /* Purple link color */
     font-weight: bold;
+    text-decoration: underline;
     cursor: pointer;
-    margin-top: 15px;
 }
 
-/* Add these styles to your CSS file */
+
+/* --- CLEANUP/REDUNDANT CLASSES --- */
+.btn-primary, .btn-secondary {
+    display: none; 
+}
 .grey-button {
+    /* Keeping this as a utility class, but it's not used for the NEXT button anymore */
     background-color: #ccc !important;
     color: #888;
     border: 1px solid #ccc;
     cursor: not-allowed;
 }
 
-.black-button {
-    background-color: black !important;
-    color: white;
-    border: 1px solid black;
-    cursor: pointer;
+/* 6. LOGIN & REGISTRATION FORMS STYLES - Specific Overrides */
+
+/* --- Login Form Specific Styles --- */
+/* Target labels within the login form container (assuming you add class 'login-form' to the form tag) */
+.login-form .input-group label,
+.login-form .form-group label { /* Added .form-group for your specific current HTML */
+    color: var(--error-color) !important; /* Forces the red color */
 }
 
-/* =========================================
-   1. PERSONAL DETAILS PAGE LAYOUT
-   ========================================= */
+/* If you want the heading (e.g., "Sign In") to remain purple: */
+.auth-form-container h2 {
+    color: var(--woolies-purple); /* Ensure this stays purple */
+}
 
-/* Ensure the main container for the form is centered and styled consistently */
-.login-container {
-    /* Assuming this class exists from your register/login pages */
-    max-width: 420px;
-    margin: 50px auto;
-    padding: 30px;
+/* If you are using the generic selector for other forms, ensure the default is purple: */
+.input-group label {
+    display: block;
+    color: var(--woolies-purple); /* Keep default label color purple */
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+/* Update the label color to red specifically for the login form */
+/* Note: We use .auth-form and .form-group to match your HTML */
+.auth-form .form-group label {
+    color: var(--error-color); /* Use the defined red variable */
+    font-weight: bold;
+    /* Ensure other label properties are maintained for consistency */
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+/* Ensure the generic label style doesn't override the red if you're using !important elsewhere */
+/* This is your current default for other forms (like register/profile) */
+.input-group label {
+    color: var(--woolies-purple); /* Or keep it as var(--text-dark) if preferred */
+    /* ... other styles ... */
+}
+
+/* Styling for the overall form container */
+.auth-form {
+    padding: 20px;
+    max-width: 400px;
+    margin: 30px auto;
+    background-color: white;
     border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.title-text {
-    font-size: 24px;
-    font-weight: 700;
-    color: #333;
+/* Form Header and Title */
+.form-header {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Allows close button to wrap if necessary */
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-header h2 {
+    color: var(--woolies-purple);
+    font-size: 1.8em;
+    flex-basis: 100%; /* Make h2 take full width */
     margin-bottom: 5px;
 }
 
-.instruction-text {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
+.form-header .close-btn {
+    color: var(--text-dark);
+    font-size: 1.5em;
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
-/* =========================================
-   2. FORM ELEMENTS
-   ========================================= */
+.form-header .subtitle {
+    color: var(--text-medium);
+    font-size: 0.9em;
+    margin-bottom: 0;
+}
 
-/* Style for all input fields and the select dropdown */
-#personalDetailsForm input[type="text"],
-#personalDetailsForm input[type="tel"],
-#personalDetailsForm input[type="date"],
-#personalDetailsForm select {
+/* Form Group (Email/Password container) */
+.form-group {
+    margin-bottom: 20px;
+    position: relative; /* For the password toggle */
+}
+
+/* Input Fields (Reusing existing field style) */
+.form-group input[type="email"],
+.form-group input[type="password"] {
     width: 100%;
-    padding: 12px 15px;
-    margin-bottom: 15px;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Crucial for padding to be included in width */
-    font-size: 16px;
-    transition: border-color 0.3s;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
 }
 
-#personalDetailsForm input:focus,
-#personalDetailsForm select:focus {
-    border-color: #007bff; /* Highlight on focus */
+.form-group input:focus {
     outline: none;
+    border-color: var(--woolies-purple);
 }
 
-#personalDetailsForm label {
-    display: block;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: 600;
-    font-size: 13px;
-    color: #333;
+/* Password Toggle Icon */
+.password-group {
+    /* Ensures the password group is relative for the toggle icon */
 }
 
-/* Hint text for contact number */
-.contact-hint {
-    font-size: 12px;
-    color: #999;
-    margin-top: -10px;
-    margin-bottom: 5px;
-}
-
-/* Combine country code and contact number input */
-.contact-input-group {
-    display: flex;
-    margin-bottom: 15px;
-}
-
-.contact-input-group .country-code {
-    padding: 12px 10px;
-    border: 1px solid #ccc;
-    border-right: none;
-    background-color: #f7f7f7;
-    border-radius: 4px 0 0 4px;
-    font-size: 16px;
-    color: #555;
-    display: flex;
-    align-items: center;
-}
-
-.contact-input-group input {
-    margin-bottom: 0; /* Remove extra margin */
-    border-radius: 0 4px 4px 0;
-    flex-grow: 1;
-}
-
-/* =========================================
-   3. PROMOTIONAL CHECKBOXES
-   ========================================= */
-
-.section-divider {
-    font-size: 14px;
-    font-weight: 700;
-    color: #000;
-    text-align: center;
-    padding: 10px 0;
-    margin: 25px 0 15px;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-
-.checkbox-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.checkbox-group input[type="checkbox"] {
-    /* Use custom checkbox styling if necessary, but keep it simple */
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-}
-
-.checkbox-group label {
-    font-weight: 400; /* Regular weight for descriptive text */
-    margin: 0;
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 60%; /* Adjust based on input padding */
+    transform: translateY(-50%);
+    color: var(--text-medium);
     cursor: pointer;
 }
 
-/* =========================================
-   4. BUTTONS
-   ========================================= */
+/* Forgot Password Link */
+.forgot-password-link {
+    display: block;
+    text-align: right;
+    color: var(--woolies-purple);
+    text-decoration: underline;
+    font-size: 0.9em;
+    margin-top: -10px;
+    margin-bottom: 25px;
+}
 
+/* Promo/Register Area */
+.login-promo {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.login-promo p {
+    font-size: 0.9em;
+    color: var(--text-dark);
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+/* Register Button Styling (Matching the secondary/white button aesthetic) */
+.register-button-style {
+    /* Combines black-button-style for structure and white-button for look */
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: white;
+    color: var(--text-dark);
+    border: 1px solid var(--text-dark);
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.register-button-style:hover {
+    background-color: var(--text-dark);
+    color: var(--text-light);
+}
+
+/* Apply base black button style to the submit button */
+#signInBtn {
+    /* Uses .black-button-style for its look */
+    width: 100%;
+    /* Ensure it has the base styles from .black-button-style */
+}
+
+
+/* --- 7. BUTTON UTILITIES (Additions) --- */
+
+/* Container for grouping buttons */
 .button-group {
     display: flex;
+    margin-top: 15px; /* Add some space above the button group */
+}
+
+/* Modifier to spread buttons out */
+.button-group.space-between {
     justify-content: space-between;
-    margin-top: 30px;
-    gap: 10px;
+    width: 100%;
 }
 
-.button-group button {
-    flex-grow: 1;
+/* Base style for a secondary action button */
+.grey-button {
+    /* Inherit base button styles like padding, font, and text-transform */
+    background-color: var(--secondary-color); /* Light gray/green for neutral action */
+    color: var(--text-dark);
+    border: 1px solid var(--secondary-color);
     padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 600;
     border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.2s;
 }
 
-.cancel-button {
-    background-color: #fff;
-    color: #333;
-    border: 1px solid #ccc;
+.grey-button:hover {
+    background-color: #d0d0d0; /* A slightly darker gray on hover */
+    border-color: #d0d0d0;
 }
 
-.cancel-button:hover {
-    background-color: #f0f0f0;
+.grey-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.black-button, 
-.register-button { /* Use .black-button for consistency with your previous styles */
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #000;
-}
-
-.black-button:hover,
-.register-button:hover {
-    background-color: #333;
-}
-
-.terms-text {
+/* Utility to make a button take half the available width */
+.half-width-btn {
+    flex-basis: 48%; /* Takes slightly less than half to allow for space in space-between */
+    display: block;
     text-align: center;
-    font-size: 12px;
-    color: #999;
-    margin-top: 20px;
 }
 
-.terms-text a {
-    color: #007bff;
-    text-decoration: none;
+/* Utility to make a button/link take full width */
+.full-width-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+}
+
+/* Ensure the BACK TO SIGN IN button (which uses .white-button) looks correct */
+/* .white-button should be defined in a previous step, but ensure it works as a link */
+.white-button {
+    background-color: white;
+    color: var(--text-dark);
+    border: 1px solid var(--text-dark);
+    text-decoration: none; /* For links */
+    /* ... other shared button styles ... */
+}
+
+/* Styling specific to the Verification Code input field */
+#code {
+    /* Center the text for a short code input */
+    text-align: center; 
+    /* Use a larger font for better visibility */
+    font-size: 1.5em; 
+    /* Optionally, ensure a fixed width is possible (if needed, but 100% works too) */
+}
+
+/* Ensure the code input doesn't stretch the placeholder text too much */
+#code::placeholder {
+    font-size: 0.8em;
+}
+
+/* Styling for the password requirement guidelines box */
+.password-tips {
+    background-color: #f7f7f7; /* Light grey background */
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-top: -10px; /* Pull it up closer to the password field */
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--text-dark);
+}
+
+.password-tips p {
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: var(--woolies-purple); /* Highlight the main heading */
+}
+
+/* Styling for the list of requirements */
+#passwordTipsList {
+    list-style-type: none; /* Remove default bullet points */
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+#passwordTipsList li {
+    line-height: 1.6;
+    /* Optional: Add a custom checkmark icon instead of a bullet */
+    padding-left: 20px; 
+    position: relative;
+}
+
+#passwordTipsList li::before {
+    /* FontAwesome Checkmark icon */
+    font-family: 'Font Awesome 6 Free'; 
+    content: '\f00c'; /* Unicode for solid checkmark */
+    font-weight: 900;
+    color: var(--primary-color); /* Woolworths Green checkmark */
+    position: absolute;
+    left: 0;
+    top: 0;
 }

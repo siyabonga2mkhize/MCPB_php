@@ -1,0 +1,53 @@
+/* ASSETS/css/cart.css (for Empty Cart view) */
+
+.empty-cart-view {
+    /* Set up the container for the vertical layout */
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 120px); /* Ensures the cart area is full height, pushing the button down */
+    padding: 20px 0;
+}
+
+.cart-title {
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.empty-message-area {
+    flex-grow: 1; /* Pushes the footer to the bottom */
+    text-align: center;
+    padding: 50px 0;
+    font-size: 1.1em;
+    color: #666;
+}
+
+.empty-footer {
+    width: 100%;
+    /* Position the button fixed at the bottom, matching common mobile design */
+    position: fixed; 
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: white; /* Ensures the button background is clean */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 500;
+}
+
+.continue-shopping-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: black; /* Solid black background for the button */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    text-transform: uppercase;
+}
