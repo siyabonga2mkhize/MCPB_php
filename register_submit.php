@@ -28,15 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Get and validate input
-$data = json_decode(file_get_contents("php://input"), true);
-$email = $data['email'] ?? '';
-$password = $data['password'] ?? '';
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
 
 if (empty($email) || empty($password)) {
     http_response_code(400); 
     echo json_encode(['success' => false, 'message' => 'Email and Password are required.']);
     exit;
 }
+
+// Collect additional fields from the form submission
+$title = $_POST['title'] ?? null;
+$firstName = $_POST['first_name'] ?? null;
+$lastName = $_POST['last_name'] ?? null;
+$contactNumber = $_POST['contact_number'] ?? null;
 
 // 2. Prepare Data
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -45,7 +50,7 @@ $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 $userModel = new UserModel();
 
 // 4. Call the Model's method
-$result = $userModel->registerUser($email, $hashed_password);
+$result = $userModel->registerUser($email, $hashed_password, $title, $firstName, $lastName, $contactNumber);
 
 // 5. Respond based on the Model's result
 if ($result['success']) {

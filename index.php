@@ -17,7 +17,7 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Woolworths</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="ASSETS/css/style.css"> 
+    <link rel="stylesheet" href="Assets/CSS/style.css"> 
 </head>
 <body>
 
@@ -94,12 +94,8 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
                 
                 <nav class="menu-nav">
                     <a href="#" id="foodLink" class="menu-item">FOOD <i class="fa-solid fa-angle-right"></i></a> 
-                    <a href="wcellar.php" class="menu-item">WCELLAR <i class="fa-solid fa-angle-right"></i></a>
                     <a href="women.php" class="menu-item">WOMEN <i class="fa-solid fa-angle-right"></i></a>
                     <a href="men.php" class="menu-item">MEN <i class="fa-solid fa-angle-right"></i></a>
-                    <a href="kids.php" class="menu-item">KIDS <i class="fa-solid fa-angle-right"></i></a>
-                    <a href="baby.php" class="menu-item">BABY <i class="fa-solid fa-angle-right"></i></a>
-                    <a href="home.php" class="menu-item">HOME <i class="fa-solid fa-angle-right"></i></a>
                     
                     <?php if ($isLoggedIn): ?>
                         <hr class="menu-divider">
@@ -123,20 +119,9 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
                 
                 <nav class="menu-nav sub-menu-nav">
                     <a href="food_homepage.php" class="menu-item food-homepage">FOOD HOMEPAGE</a>
-                    
-                    <hr class="menu-divider-thin">
 
-                    <a href="new_in.php" class="menu-item link-with-tag">NEW IN <span class="new-tag">NEW</span></a>
-                    
-                    <a href="promotions.php" class="menu-item dropdown-toggle">PROMOTIONS <i class="fa-solid fa-angle-down"></i></a>
-                    <a href="daily_difference.php" class="menu-item">DAILY DIFFERENCE</a>
-
-                    <a href="fruit.php" class="menu-item dropdown-toggle">FRUIT, VEGETABLES & SALADS <i class="fa-solid fa-angle-down"></i></a>
-                    <a href="#" id="meatLink" class="menu-item dropdown-toggle">MEAT, POULTRY & FISH <i class="fa-solid fa-angle-right"></i></a> <a href="milk.php" class="menu-item dropdown-toggle">MILK, DAIRY & EGGS <i class="fa-solid fa-angle-down"></i></a>
+                    <a href="#" id="meatLink" class="menu-item dropdown-toggle">MEAT, POULTRY & FISH <i class="fa-solid fa-angle-right"></i></a>
                     <a href="ready_meals.php" class="menu-item dropdown-toggle">READY MEALS <i class="fa-solid fa-angle-down"></i></a>
-                    <a href="deli.php" class="menu-item dropdown-toggle">DELI & ENTERTAINING <i class="fa-solid fa-angle-down"></i></a>
-                    <a href="food_to_go.php" class="menu-item dropdown-toggle">FOOD TO GO <i class="fa-solid fa-angle-down"></i></a>
-                    <a href="bakery.php" class="menu-item dropdown-toggle">BAKERY <i class="fa-solid fa-angle-down"></i></a>
                 </nav>
             </div>
         </div>
@@ -319,7 +304,7 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
                         <li><a href="login.php">Sign in/Register</a></li>
                         <li><a href="orders.php">Orders</a></li>
                         <li><a href="shopping_list.php">Shopping Lists</a></li>
-                        <li><a href="account_details.php">Account Details</a></li>
+                        <li><a href="profile.php">Account Details</a></li>
                         <li><a href="link_card.php">Link a Card</a></li> </ul>
                 </div>
 

@@ -940,98 +940,272 @@ body.menu-open {
     color: var(--text-medium);
     font-size: 0.8em;
 }
-/* Keep the rest of the styles from the previous step (.team-grid, .member-name, .member-description, etc.) */
-/* --- GLOBAL STYLES & WRAPPER (REVISION) --- */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    box-sizing: border-box;
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
-    display: flex; /* Use flex to push footer to bottom if content is short */
-    flex-direction: column;
+
+
+/* --- 13. STORE LOCATOR STYLES --- */
+
+/* Reuse the full-screen container behavior (assuming it was added previously) */
+.store-locator-container {
+    /* Inherits position: fixed, 100vw/vh, and centering from .login-container */
+    
+    /* Modify to align content at the top and allow internal scrolling */
+    align-items: flex-start; 
+    padding: 20px 0; 
+    overflow-y: auto;
 }
 
+.store-locator-content {
+    width: 100%;
+    max-width: 600px; /* Limit total width on desktop */
+    margin: 0 auto;
+    background-color: white; /* Ensure content is on a white background */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.store-header {
+    text-align: center;
+    padding: 0 0 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.store-header h2 {
+    color: var(--woolies-purple);
+    font-size: 1.8em;
+}
+
+/* Close button style (reused) */
+.store-header .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    font-size: 1.5em;
+    color: var(--text-dark);
+}
+
+
+/* MAP STYLES */
+#map {
+    height: 300px; /* Set a fixed height for the map container */
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* --- 13. STORE LOCATOR STYLES (UPDATED FOR NO-API) --- */
+
+/* ... (Keep all existing styles for .store-locator-container, .store-locator-content, .store-header) ... */
+
+/* NEW: MAP PLACEHOLDER STYLES (Replaces #map) */
+.map-placeholder {
+    height: 300px; 
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    
+    /* Center content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background-color: #f0f0f0;
+    color: #888;
+    text-align: center;
+    padding: 20px;
+}
+
+.map-placeholder i {
+    color: var(--woolies-purple); /* Purple icon for visibility */
+    margin-bottom: 10px;
+}
+
+.map-placeholder p {
+    max-width: 250px;
+    font-size: 0.9em;
+}
+
+
+/* --- 13. STORE LOCATOR STYLES (ENHANCED APPEARANCE) --- */
+
+/* --- Store List & Separator Styles --- */
+
+/* Style the link wrapper */
+.store-item-link {
+    text-decoration: none; 
+    color: var(--text-dark); /* Ensure link text is dark */
+    display: block; 
+}
+
+.store-item {
+    /* Base padding and transition */
+    padding: 15px 10px; 
+    transition: background-color 0.2s, box-shadow 0.2s;
+    
+    /* NEW: Clear separator style */
+    border-bottom: 2px solid var(--secondary-color); /* Light Green separator */
+    margin-bottom: 0; /* Ensures the separator is tight against the next item */
+}
+
+/* Remove the separator on the last item for a cleaner look */
+#store-list .store-item-link:last-child .store-item {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.store-item:hover {
+    background-color: var(--secondary-color); /* Hover uses Light Background Green */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Content Styling --- */
+
+.store-item h4 {
+    /* Use Dark Green for the store name */
+    color: var(--primary-color); 
+    margin: 0 0 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.store-item p {
+    margin: 3px 0;
+    font-size: 0.9em;
+    color: var(--text-medium); /* Medium grey color for details */
+}
+
+/* ABOUT PAGE TEAM DISPLAY STYLES */
+
+/* Wrapper for the entire page */
 .wrapper {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    flex-grow: 1; /* Allows wrapper to take up available space */
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- IMAGE BOX STYLES (CRITICAL UPDATE) --- */
+/* Title section */
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Card container for team members */
+.card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual team member card */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image box */
 .imbBx {
-    height: 280px; /* Consistent height for image area */
-    width: 100%; /* Ensures it takes full width of the card */
-    overflow: hidden; /* **CRITICAL: Hides any overflowing parts of the image** */
-    position: relative;
-    border-bottom: 5px solid #007bff; /* Keeps the bottom border line */
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--app-bg);
 }
 
 .imbBx img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* **CRITICAL: This property makes the image fill and crop nicely** */
-    object-position: center; /* **CRITICAL: Centers the image within its box** */
-    display: block; /* Removes extra space below image */
-    transition: transform 0.5s ease;
+    object-fit: cover;
 }
 
-.card:hover .imbBx img {
-    transform: scale(1.05); /* Slight zoom on image hover */
+/* Content box */
+.content {
+    padding: 15px;
+    text-align: center;
 }
 
-
-/* --- CARD GRID LAYOUT (REVISION) --- */
-.card_container {
-    display: grid; /* Using CSS Grid for more robust layout */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
-    gap: 30px; /* Space between cards */
-    margin-bottom: 30px;
-    justify-items: center; /* Center cards within grid columns if space allows */
+.content h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
 }
 
-/* FOOTER STYLES (REVISION) */
+.content h3 span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.member-role {
+    font-size: 1rem;
+    color: var(--woolies-purple);
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.member-description {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* Footer styles */
 footer {
     text-align: center;
-    padding: 20px;
-    margin-top: auto; /* Pushes footer to the bottom */
-    border-top: 1px solid #eee;
-    color: #888;
-    font-size: 0.9em;
-}
-/* ADDED STYLES FOR ROLE AND DESCRIPTION */
-
-/* Style the Role */
-.card .member-role {
-    font-size: 0.95em;
-    font-weight: bold;
-    color: #007bff; /* Use the same blue as the image border/title underline */
-    margin: 10px 0 5px;
-    text-transform: uppercase;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: var(--text-medium);
 }
 
-/* Style the Description */
-.card .member-description {
-    font-size: 0.85em;
-    color: #555;
-    padding: 0 10px 10px;
-    line-height: 1.4;
-    margin: 0;
-}
+/* ABOUT PAGE TEAM DISPLAY STYLES - MOBILE OPTIMIZATION */
 
-/* Ensure the content padding is sufficient for new elements */
-.content {
-    padding: 20px 0; /* Adjusted padding to better fit new elements */
-}
+/* Ensure images fit well on smaller screens */
+@media (max-width: 400px) {
+    .imbBx {
+        height: 150px; /* Adjust height for smaller screens */
+    }
 
-/* Adjust h3 to remove the bottom margin that might interfere with role */
-.contentBx h3 {
-    margin: 0 0 5px; /* Keep a small margin for the student number */
-}
+    .imbBx img {
+        object-fit: contain; /* Ensure the image fits within the box without cropping */
+    }
 
-/* Ensure the full card border uses the primary color (Woolies Purple/Green if available, but using blue for contrast here) */
-.imbBx {
-    border-bottom: 5px solid #007bff; 
+    .card {
+        padding: 10px; /* Add some padding for better spacing */
+    }
+
+    .content h3 {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .member-role {
+        font-size: 0.9rem; /* Slightly smaller role text */
+    }
+
+    .member-description {
+        font-size: 0.8rem; /* Adjust description font size */
+    }
 }

@@ -2,18 +2,18 @@
 // Example Team Data - UPDATE THIS ARRAY WITH COMPLETE DETAILS
 $team_members = [
     [
-        'name' => 'Isaac Toluwanimi Olatunji',
-        'student_no' => '22461594',
-        'picture' => 'Isaac.jpg',
-        'role' => 'Project Lead & Coder',
-        'description' => 'Managed team coordination, coded core logic, and ensured final product delivery.'
-    ],
-    [
         'name' => 'Siyabonga Mkhize',
         'student_no' => '22430686',
         'picture' => 'Siyabonga.jpg',
         'role' => 'Lead Frontend Developer (Coder)',
         'description' => 'Responsible for the mobile-first CSS framework and client-side interactions.'
+    ],
+    [
+        'name' => 'Isaac Toluwanimi Olatunji',
+        'student_no' => '22461594',
+        'picture' => 'Isaac.jpg',
+        'role' => 'Project Lead & Coder',
+        'description' => 'Managed team coordination, coded core logic, and ensured final product delivery.'
     ],
     [
         'name' => 'Siyamthanda Dlamini',
@@ -74,43 +74,73 @@ $team_members = [
 ];
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team</title>
+    <link rel="stylesheet" href="ASSETS/css/about.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="Assets/CSS/style.css"> 
+    <style>
+        .message {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            color: red;
+        }
+    </style>
+</head>
 <body>
-    <div class="wrapper">
-        <div class="title">
-            <h2>Our Team</h2>
-        </div>
-
-        <div class="card_container"> 
-            
-            <?php $counter = 1; ?>
-            <?php foreach ($team_members as $member): ?>
-                
-                <div class="card">
-                    <div class="imbBx">
-                        <img src="./Pictures/<?php echo $member['picture']; ?>" alt="<?php echo $member['name']; ?>">
-                    </div>
-
-                    <div class="content">
-                        <div class="contentBx">
-                            <h3>
-                                <?php echo $counter . '. ' . $member['name']; ?> <br>
-                                <span><?php echo $member['student_no']; ?></span>
-                            </h3>
-                        </div>
-                        
-                        <p class="member-role"><?php echo $member['role']; ?></p>
-                        
-                        <p class="member-description"><?php echo $member['description']; ?></p>
-                    </div>
+    <div class="page-wrapper">
+        <div class="app-container">
+            <header class="main-header">
+                <a href="index.php" class="logo-link"><span class="logo">WOOLWORTHS</span></a>
+                <div class="header-icons">
+                    <a href="<?php echo $isLoggedIn ? 'profile.php' : 'login.php'; ?>" class="icon-link"><i class="fa-regular fa-user"></i></a>
+                    <a href="cart.php" class="icon-link shopping-cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <button id="openMenuBtn" class="menu-btn"><i class="fa-solid fa-bars"></i></button>
                 </div>
-                
-                <?php $counter++; ?>
-            <?php endforeach; ?>
-            
+            </header>
+
+            <div class="message">
+                <p>Please click on a member to view their certificate.</p>
+            </div>
+            <div class="title">
+                <h2>Our Team</h2>
+            </div>
+
+            <div class="card_container"> 
+                <?php $counter = 1; ?>
+                <?php foreach ($team_members as $member): ?>
+                    <div class="card">
+                        <a href="certificate.php?name=<?php echo urlencode($member['name']); ?>&certificate=<?php echo urlencode($member['student_no'] . '.pdf'); ?>">
+                            <div class="imbBx">
+                                <img src="./Pictures/<?php echo $member['picture']; ?>" alt="<?php echo $member['name']; ?>">
+                            </div>
+
+                            <div class="content">
+                                <div class="contentBx">
+                                    <h3>
+                                        <?php echo $counter . '. ' . $member['name']; ?> <br>
+                                        <span><?php echo $member['student_no']; ?></span>
+                                    </h3>
+                                </div>
+                                
+                                <p class="member-role"><?php echo $member['role']; ?></p>
+                                
+                                <p class="member-description"><?php echo $member['description']; ?></p>
+                            </div>
+                        </a>
+                    </div>
+                    <?php $counter++; ?>
+                <?php endforeach; ?>
+            </div>
         </div>
-        
-        <footer>
-            <p>© 2025 Woolworths. All Rights Reserved.</p>
-        </footer>
     </div>
 </body>
+</html>

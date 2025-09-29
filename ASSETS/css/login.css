@@ -1,26 +1,63 @@
-/* Woolworths Brand Colors */
+/* Core Woolworths Brand Colors */
 :root {
     --primary-color: #004D40; /* Dark Green */
-    --accent-color: #D32F2F; /* Red for errors/accents */
-    /* REMOVED: --tip-bg-color: #EAF7E8; (No light background for tips in the target design) */
+    --secondary-color: #E6F5EC; /* Light Background Green */
     --text-dark: #333;
-    --text-medium: #666;
-    --border-color: #ccc;
-    --woolies-purple: #6A1B9A; /* Color for Sign In text, links, and Register text */
-    --black-color: #000; /* Added for consistency with black button/border */
-    --disabled-grey: #ccc; /* Specifically for the NEXT button */
+    --text-light: #fff;
+    --app-bg: #f0f0f0; /* Off-white for background outside the app frame */
+    --woolies-green: #00704A; /* A slightly brighter green for contrast/success */
+    --text-medium: #888;
+    --woolies-purple: #7B1FA2; /* Used for links/headings in sign-in/register */
+    --error-color: #d80000;
 }
 
+/* 1. GLOBAL RESET & MOBILE FRAME (STICKY FOOTER FIX) */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: Arial, sans-serif;
-    /* Use the off-white background seen in the image */
-    background-color: #f0f0f0; 
+    background-color: var(--app-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* NEW: Class added by JS to body when menu is open */
+body.menu-open {
+    overflow: hidden; /* Prevent scrolling when menu is active */
+}
+
+.page-wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    position: relative;
+}
+
+/* Global container for centering desktop content (used in the footer) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* This is the container that simulates the phone screen */
+.app-container {
+    max-width: 500px;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Dialog Wrapper (Used by both Sign In and Register) --- */
@@ -34,6 +71,24 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     position: relative; 
+}
+
+/* Adjust the register dialog to match the design in the image */
+.login-dialog-wrapper {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add spacing */
+    box-shadow: none; /* Remove shadow */
+    border-radius: 0; /* Remove rounded corners */
+    position: fixed; /* Fixed positioning */
+    top: 0;
+    left: 0;
+    background-color: var(--app-bg); /* Background color */
+    z-index: 10000; /* Ensure it appears above other elements */
 }
 
 /* FORCE FULL-SCREEN LOGIN OVERLAY */
@@ -64,7 +119,26 @@ body {
     padding: 0;
 }
 
-//* Ensure the inner form remains centered and doesn't stretch */
+/* Adjust the login form to fit the entire container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ensure it takes the full viewport height */
+}
+
+.auth-form {
+    width: 100%; /* Make the form take the full width of the container */
+    height: 100%; /* Make the form take the full height of the container */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px; /* Add some padding for better spacing */
+    box-shadow: none; /* Remove the shadow to blend with the container */
+    border-radius: 0; /* Remove border radius to fit the container */
+}
+
+/* Ensure the inner form remains centered and doesn't stretch */
 .login-container .auth-form {
     margin: 0; /* Remove the old auto margin */
     /* Keep the form compact and visible */
@@ -91,16 +165,27 @@ body.login-view-active {
     line-height: 1; 
 }
 
+/* Stick the header section to the top of the registration form */
 .header-section {
-    padding-top: 0; 
-    margin-bottom: 25px;
-    text-align: left;
+    position: absolute; /* Position it absolutely within the container */
+    top: 0; /* Stick to the top */
+    width: 100%; /* Full width */
+    text-align: center; /* Center align the content */
+    background-color: var(--app-bg); /* Optional: Add background color */
+    padding: 20px; /* Add spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
 }
 
 .header-section h1 {
-    font-size: 1.8rem;
-    color: var(--text-dark); /* Black for the main title */
-    margin-bottom: 5px;
+    font-size: 2rem; /* Adjust font size */
+    color: var(--text-dark); /* Dark text color */
+    margin-bottom: 10px; /* Add spacing */
+}
+
+.header-section .instruction-text {
+    font-size: 1rem; /* Adjust font size */
+    color: var(--text-medium); /* Medium text color */
+    margin-bottom: 0; /* Remove extra spacing */
 }
 
 /* Instruction text style */
@@ -191,36 +276,33 @@ body.login-view-active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 20px; /* Add spacing */
 }
 
 /* NEW: CANCEL Button (Left-aligned purple text link) - Target Style */
 .cancel-button-text {
-    color: var(--woolies-purple); /* Purple Text */
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 10px 0;
+    color: var(--text-dark); /* Dark text color */
+    font-size: 1rem; /* Adjust font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 0; /* Add padding */
     cursor: pointer;
-    flex-grow: 1; 
-    text-align: left;
 }
-
 
 /* NEXT Button - Disabled (Default Grey) */
 .next-button-grey {
-    padding: 10px 20px;
-    background-color: var(--disabled-grey);
-    color: var(--text-medium);
-    border: none; /* No border for the grey state */
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: not-allowed;
-    width: 35%; 
-    text-align: center;
+    padding: 10px 20px; /* Add padding */
+    background-color: #ccc; /* Grey background */
+    color: #888; /* Grey text */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Adjust font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    cursor: not-allowed; /* Disabled cursor */
+    width: 35%; /* Adjust width */
+    text-align: center; /* Center text */
 }
 /* NEXT Button - Enabled (Black) */
 .next-button-black {
@@ -287,6 +369,10 @@ body.login-view-active {
     
     /* NEW/UPDATED: Target design has a heading above the list */
     /* Ensure the heading "Your password should include:" is styled if present in HTML */
+    background-color: #E6F5EC; /* Light green background */
+    padding: 15px; /* Add padding */
+    border-radius: 8px; /* Rounded corners */
+    margin-top: 20px; /* Add spacing */
 }
 
 /* Style for the heading above the list (assuming it's a <p> tag within the list wrapper) */
@@ -303,21 +389,21 @@ body.login-view-active {
 }
 
 .password-requirements li {
-    font-size: 0.9rem; /* Increased slightly for better visibility */
-    color: var(--text-dark);
-    line-height: 1.6;
-    padding-left: 20px; /* Space for the custom checkmark icon */
+    font-size: 0.9rem; /* Adjust font size */
+    color: var(--text-dark); /* Dark text color */
+    line-height: 1.6; /* Improve readability */
+    padding-left: 20px; /* Space for icons */
     position: relative;
-    margin-bottom: 2px;
+    margin-bottom: 10px; /* Add spacing */
 }
 
 /* Styling for the checkmark icon (fa-check-circle) */
 .password-requirements li i.fa-check-circle {
     position: absolute;
     left: 0;
-    top: 5px; 
-    color: var(--woolies-purple); /* Purple checkmark color */
-    font-size: 0.9rem;
+    top: 5px; /* Adjust positioning */
+    color: var(--woolies-green); /* Green icon color */
+    font-size: 1rem; /* Adjust icon size */
 }
 
 /* "Already a customer?" link */
@@ -457,10 +543,6 @@ body.login-view-active {
 }
 
 /* Password Toggle Icon */
-.password-group {
-    /* Ensures the password group is relative for the toggle icon */
-}
-
 .password-toggle {
     position: absolute;
     right: 12px;
@@ -645,4 +727,54 @@ body.login-view-active {
     position: absolute;
     left: 0;
     top: 0;
+}
+
+/* Adjust the registration form to fit the entire body */
+#registrationStep1Form {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Add spacing */
+    box-shadow: none; /* Remove shadow */
+    border-radius: 0; /* Remove rounded corners */
+    position: fixed; /* Fixed positioning */
+    top: 0;
+    left: 0;
+    background-color: var(--app-bg); /* Background color */
+    z-index: 10000; /* Ensure it appears above other elements */
+}
+
+/* Styling for the Title dropdown */
+#title {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+    background-color: white;
+}
+
+#title:focus {
+    border-color: var(--woolies-purple);
+    outline: none;
+}
+
+/* Styling for First Name, Last Name, and Contact Number inputs */
+#firstName, #lastName, #contactNumber {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+    background-color: white;
+}
+
+#firstName:focus, #lastName:focus, #contactNumber:focus {
+    border-color: var(--woolies-purple);
+    outline: none;
 }

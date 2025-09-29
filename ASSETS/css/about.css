@@ -1,0 +1,130 @@
+/* ABOUT PAGE TEAM DISPLAY STYLES */
+
+/* Wrapper for the entire page */
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Title section */
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Card container for team members */
+.card_container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual team member card */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image box */
+.imbBx {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--app-bg);
+}
+
+.imbBx img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Content box */
+.content {
+    padding: 15px;
+    text-align: center;
+}
+
+.content h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.content h3 span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.member-role {
+    font-size: 1rem;
+    color: var(--woolies-purple);
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.member-description {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+/* ABOUT PAGE TEAM DISPLAY STYLES - MOBILE OPTIMIZATION */
+
+/* Ensure images fit well on smaller screens */
+@media (max-width: 400px) {
+    .imbBx {
+        height: 150px; /* Adjust height for smaller screens */
+    }
+
+    .imbBx img {
+        object-fit: contain; /* Ensure the image fits within the box without cropping */
+    }
+
+    .card {
+        padding: 10px; /* Add some padding for better spacing */
+    }
+
+    .content h3 {
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    .member-role {
+        font-size: 0.9rem; /* Slightly smaller role text */
+    }
+
+    .member-description {
+        font-size: 0.8rem; /* Adjust description font size */
+    }
+}
