@@ -30,6 +30,9 @@ if ($result && $result->num_rows > 0) {
         $row['phone'] = '011 XXX YYYY';
         $row['hours'] = 'Mon-Sat: 9am - 7pm, Sun: 9am - 5pm';
         
+        // Update image path logic to use address_line_1
+        $row['image_path'] = 'Assets/Store/' . strtolower(str_replace(' ', '_', $row['address_line_1'])) . '.jpg';
+        
         $stores[] = $row;
     }
 }
@@ -69,10 +72,13 @@ $conn->close();
                         
                         <a href="<?php echo $store['map_link']; ?>" target="_blank" class="store-item-link">
                             <div class="store-item">
-                                <h4><?php echo $store['name']; ?></h4>
-                                <p><i class="fa-solid fa-location-dot"></i> <?php echo $store['address']; ?></p>
-                                <p><i class="fa-solid fa-clock"></i> <?php echo $store['hours']; ?></p>
-                                <p><i class="fa-solid fa-phone"></i> <?php echo $store['phone']; ?></p>
+                                <img src="<?php echo $store['image_path']; ?>" alt="<?php echo $store['name']; ?>">
+                                <div>
+                                    <h4><?php echo $store['name']; ?></h4>
+                                    <p><i class="fa-solid fa-location-dot"></i> <?php echo $store['address']; ?></p>
+                                    <p><i class="fa-solid fa-clock"></i> <?php echo $store['hours']; ?></p>
+                                    <p><i class="fa-solid fa-phone"></i> <?php echo $store['phone']; ?></p>
+                                </div>
                             </div>
                         </a>
                         

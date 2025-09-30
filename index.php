@@ -140,9 +140,6 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
                     
                     <a href="meat_poultry.php" class="menu-item sub-category-link">Poultry</a>
                     <a href="meat_beef.php" class="menu-item sub-category-link">Beef</a>
-                    <a href="meat_pork.php" class="menu-item sub-category-link">Pork</a>
-                    <a href="meat_lamb.php" class="menu-item sub-category-link">Lamb</a>
-                    <a href="meat_halaal.php" class="menu-item sub-category-link">Halaal Fresh Meat</a>
                 </nav>
             </div>
         </div>
@@ -312,7 +309,6 @@ $showSuccessModal = isset($_GET['showSuccess']) && $_GET['showSuccess'] === 'tru
                     <h4 class="footer-heading">CUSTOMER SERVICE</h4>
                     <ul class="footer-links">
                         <li><a href="faq.php">FAQ's</a></li>
-                        <li><a href="using_woolworths.php">Using Woolworths</a></li>
                         <li><a href="delivery_options.php">Delivery Options</a></li>
                         <li><a href="returns.php">Returns and Exchanges</a></li>
                         <li><a href="terms.php">Terms & Conditions</a></li>

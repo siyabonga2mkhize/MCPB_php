@@ -18,14 +18,14 @@ $team_members = [
     [
         'name' => 'Siyamthanda Dlamini',
         'student_no' => '22435296',
-        'picture' => 'Siyamthanda.jpg',
+        'picture' => 'Siyamthanda.png',
         'role' => 'Documentation Writer (Documenter)',
         'description' => 'Authored the project documentation, user manuals, and technical reports.'
     ],
     [
-        'name' => 'Bongumusa Zuma',
-        'student_no' => '22201607',
-        'picture' => 'Bongumusa.jpg',
+        'name' => 'Owethu Tyra Ngubane',
+        'student_no' => '22149813',
+        'picture' => 'Owethu.jpg',
         'role' => 'Backend Coder & Database Specialist',
         'description' => 'Handled server-side logic, database queries, and security protocols.'
     ],
@@ -72,6 +72,9 @@ $team_members = [
         'description' => 'Assisted with backend development and system maintenance tasks.'
     ]
 ];
+
+// Shuffle the team members array to randomize card positions
+shuffle($team_members);
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +112,7 @@ $team_members = [
 
             <div class="message">
                 <p>Please click on a member to view their certificate.</p>
+                <p>Tip: Refresh the page to shuffle the team members' positions.</p>
             </div>
             <div class="title">
                 <h2>Our Team</h2>
@@ -124,16 +128,12 @@ $team_members = [
                             </div>
 
                             <div class="content">
+                                <!-- Update card content to display only student number and full name -->
                                 <div class="contentBx">
                                     <h3>
-                                        <?php echo $counter . '. ' . $member['name']; ?> <br>
-                                        <span><?php echo $member['student_no']; ?></span>
+                                        <?php echo $counter . '. ' . $member['student_no'] . ' - ' . $member['name']; ?>
                                     </h3>
                                 </div>
-                                
-                                <p class="member-role"><?php echo $member['role']; ?></p>
-                                
-                                <p class="member-description"><?php echo $member['description']; ?></p>
                             </div>
                         </a>
                     </div>

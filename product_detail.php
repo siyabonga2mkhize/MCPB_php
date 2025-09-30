@@ -163,7 +163,11 @@ $price_per_unit_display = "R 269.99/kg"; // Placeholder based on example image
             
             <div class="shopping-list">
                 <span><i class="fa-solid fa-list-ul"></i>Add to Shopping List</span>
-                <button class="add-btn">ADD</button>
+                <!-- Redirect to wishlist management page when 'ADD' button is clicked -->
+<form method="POST" action="wishlist_management.php">
+    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+    <button class="add-btn" name="manage_wishlist">ADD</button>
+</form>
             </div>
 
         </div> 
@@ -242,7 +246,7 @@ $price_per_unit_display = "R 269.99/kg"; // Placeholder based on example image
                 <a href="meat_lamb.php" class="menu-item sub-category-link">Lamb</a>
                 <a href="meat_halaal.php" class="menu-item sub-category-link">Halaal Fresh Meat</a>
             </nav>
-        </div>
+        </div>w
     </div>
 
     <script src="ASSETS/js/menu.js"></script>
